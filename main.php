@@ -9,15 +9,25 @@
   <?php
 
     if(isset($_POST["submission"])){
-      $username = $_POST["username"];
-      $password = $_POST["password"];
-
       $conn = connect_to_db();
-      $query = select_from("*","users");
+      $username = mysqli_real_escape_string($conn, $_POST["username"]);
+      $password = mysqli_real_escape_string($conn, $_POST["password"]);
 
-      $result = $conn->query($query);
+      $select_query = select_from("*","users");
+      $select_result = $conn->query($select_query);
 
-      while($row = mysqli_fetch_assoc($result)){
+      $content = array("name", "password");
+      $values = array($username, $password);
+      $post_query = post_to($content, "users", $values);
+
+      $post_result = $conn->query($post_query);
+      if($post_result){
+        echo "posted!";
+      } else {
+        echo $post_query;
+      }
+
+      while($row = mysqli_fetch_assoc($select_result)){
         print_r($row);
       }
     }
