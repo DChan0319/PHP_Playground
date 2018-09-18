@@ -1,5 +1,9 @@
-<?php include "html/header.php";?>
-<?php include "db/db.php";?>
+<?php 
+  include "html/header.php";
+  include "db/db.php";
+  include "db/queries.php";
+?>
+
 
 <body>
   <?php
@@ -8,11 +12,10 @@
       $username = $_POST["username"];
       $password = $_POST["password"];
 
-      $connection = new mysqli('localhost', 'root', '', 'php');
+      $conn = connect_to_db();
+      $query = select_from("*","users");
 
-      $query = "SELECT * FROM users";
-
-      $result = $connection->query($query);
+      $result = $conn->query($query);
 
       while($row = mysqli_fetch_assoc($result)){
         print_r($row);
