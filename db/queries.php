@@ -1,7 +1,7 @@
 <?php 
 
-function select_from($content, $table){
-  return "SELECT $content FROM $table";
+function select_from_where($content, $table, $values){
+  return "SELECT $content FROM $table WHERE name='$values[0]' and password='$values[1]'";
 }
 
 function post_to($content, $table, $values){
