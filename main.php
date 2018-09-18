@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My First PHP App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+<?php include "html/header.php";?>
+<?php include "db/db.php";?>
+
 <body>
   <?php
 
@@ -22,12 +17,6 @@
       while($row = mysqli_fetch_assoc($result)){
         print_r($row);
       }
-
-      // if($result){
-      //   echo "queried to db php";
-      // } else {
-      //   die("query failed connection");
-      // }
     }
   ?>
 
