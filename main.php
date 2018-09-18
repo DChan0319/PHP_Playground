@@ -45,5 +45,10 @@
   <input type ="password" name="password" />
   <input type="submit" name="submission"/>
 </form>
+
+<br>
+
+<a href="get.php?search=friends&top=10">Get friends</a>
+
 </body>
 </html>
