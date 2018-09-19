@@ -13,22 +13,18 @@
     $conn = connect_to_db();
     $password = mysqli_real_escape_string($conn, $_POST["password"]);
     $encrypt_password = encrypt_password($password);
-
     $username = mysqli_real_escape_string($conn, $_POST["username"]);
     $values = array($username, $encrypt_password);
     $select_query = select_from_where("*","users", $values);
     $find_credentials = $conn->query($select_query);
+    $result = mysqli_fetch_array($find_credentials, MYSQLI_NUM);
 
-    // while($row = mysqli_fetch_assoc($find_credentials)){
-    //       print_r($row);
-    // }
-
-    if($find_credentials){
-      $cookie_value = 200;
-      $expiration = time() + (60*60*5);
-      setcookie($username, $cookie_value, $expiration);
-      echo "cookie set";
+    if($result[0]){
+      session_start();
+      $_SESSION['user'] = $username;
+      echo "session set";
     }
+
   } else if (isset($_POST["register"])){
     $conn = connect_to_db();
     $password = mysqli_real_escape_string($conn, $_POST["password"]);
@@ -57,6 +53,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  
+  <?php
+    if(!(isset($_SESSION['user']))){
+      echo "incorrect username/password. Please try again";
+  ?>
+      <form action="login.php" method="post">
+        <input type="text" name="username" />
+        <input type ="password" name="password" />
+        <input type="submit" name="login" value="login"/>
+      </form>
+  <?php
+    }
+  ?>
 </body>
 </html>
